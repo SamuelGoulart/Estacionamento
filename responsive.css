@@ -20,8 +20,11 @@
     #modalEscolhaDeComprovante>.modal-content button {
         margin-left: 20px;
     }
-    .modal-footer button{
-       width: 100px;
+    .btnTres button{
+       width: 28vw;
+    }
+    .btnDois button{
+        width: 42vw;
     }
 }
 
