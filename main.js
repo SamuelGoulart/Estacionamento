@@ -132,10 +132,12 @@ const clearInput = () => {
 
 const disableButton = () => {
     document.querySelector('#cancelarComprovanteEntrada').classList.add('displayNome')
+    document.querySelector('#modalComprovanteEntrada').classList.add('btnDois')
 }
 
 const enableButton = () =>{
     document.querySelector('#cancelarComprovanteEntrada').classList.remove('displayNome')
+    document.querySelector('#modalComprovanteEntrada').classList.remove('btnDois')
 }
 
 const printProofOfEntry = () => {
