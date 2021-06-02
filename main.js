@@ -167,7 +167,7 @@ const saveClient = () => {
     if (isValidForm()) {
 
         if (dbPrice == '') {
-            confirm("Deve ser informado os preços, antes de inserir um cliente")
+            confirm("Deve ser informado os preços, antes de inserir o primeiro cliente")
             openModalPrice()
 
         } else {
@@ -385,6 +385,9 @@ document.querySelector('#precoAteUmaHora')
     .addEventListener('keyup', applyMask)
 
 document.querySelector('#placaDoCarro')
+    .addEventListener('keyup', applyMaskCar)
+
+document.querySelector('#placaEditar')
     .addEventListener('keyup', applyMaskCar)
 
 document.querySelector('#btnPreco')

@@ -1,5 +1,5 @@
 /* RESPONSIVIDADE DOS BOTÃOES */
-@media (max-width: 480px) {
+@media (max-width: 540px) {
     button {
         width: 130px;
         height: 60px;
@@ -10,12 +10,6 @@
     #btnPagamento, #btnComprovanteEntrada {
         width: 90vw !important;
         font-size: 0.9rem !important;
-    }
-    #btnComprovanteEntrada {
-        margin-bottom: 70px;
-    }
-    #btnPagamento {
-        margin-top: 70px;
     }
     #modalEscolhaDeComprovante>.modal-content button {
         margin-left: 20px;
@@ -30,7 +24,7 @@
 
 /* RESPONSIVIDADE DOS MODAIS */
 
-@media (max-width:480px) {
+@media (max-width:540px) {
     .modal-content {
         width: 100%;
         height: auto;
@@ -54,7 +48,7 @@
 
 /* RESPONSIVIDADE TABELA COM OS CADASTROS */
 
-@media (max-width:480px) {
+@media (max-width:540px) {
     th {
         display: none;
     }
@@ -73,14 +67,11 @@
     main h1 {
         margin: 0rem 0px 0px 1.9rem;
     }
+    #tbody td:nth-child(1) {
+        border-radius: 25px 25px 0px 0px;
+    }
     #tbody td:nth-child(n+2):nth-child(-n+3) {
         border-radius: 0px;
-    }
-    #tbody td:nth-child(2),
-    #placaEditar,
-    #placaComprovante,
-    #placaComprovanteEntrada{
-        text-transform: uppercase;
     }
     #tbody td:nth-child(4) {
         border-radius: 0px 0px 25px 25px;
@@ -121,6 +112,7 @@
 }
 
 @media (max-width: 900px) {
+
     #cadastroCliente {
         border-radius: 25px 25px 0px 0px;
     }
