@@ -358,6 +358,7 @@ thead>tr {
     }
     #tbody td:nth-child(5) {
         width: 91vw;
+        
         margin: 10px 0px 30px -10px;
     }
     #tabelaClientes th:nth-child(5) {
