@@ -3,7 +3,7 @@
 <h1 align="center" >Estacionamento</h1>
 
 
-<a href="https://samuelgoulart.github.io/Projetos-com-JavaScript/Estacionamento/">
+<a href="https://samuelgoulart.github.io/Estacionamento/">
 <img align="right" src="https://user-images.githubusercontent.com/62961331/120190332-d8e20380-c1ee-11eb-9fbe-6866f7e76ef1.gif" alt="Gif do estacionamento">
 </a>
 
@@ -38,4 +38,4 @@ Criação de um sistema para estacionamento
 
 Clique no botão para ir até preview do projeto.
 
-[![Preview](https://user-images.githubusercontent.com/62961331/118410582-89d09600-b666-11eb-822b-df40552531cf.png)](https://samuelgoulart.github.io/Projetos-com-JavaScript/Estacionamento/)
+[![Preview](https://user-images.githubusercontent.com/62961331/118410582-89d09600-b666-11eb-822b-df40552531cf.png)](https://samuelgoulart.github.io/Estacionamento/)
