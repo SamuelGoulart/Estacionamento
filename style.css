@@ -35,8 +35,9 @@ main, .backgroundForm {
     background-color: white;
 }
 
-main>h1, .backgroundForm>h1 {
+main h1, .backgroundForm>h1 {
     margin: 2rem 0px 0px 4rem;
+    font-size: 1.8rem;
 }
 
 td {
@@ -51,6 +52,43 @@ td {
 thead th {
     font-size: 1.3rem;
 }
+
+#nav {
+    list-style: none;
+    background-color: #26a69a;
+    border-radius: 25px;
+    width: 450px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 50px;
+    margin-left: 30px;
+}
+#nav li{
+    padding-top: 15px;
+}
+
+#abaTabelaClientes,
+#abaRelatorioPagamento{
+    margin-left: 14px;
+    padding: 5px 10px 5px 10px;
+    color: black;
+    text-decoration:none; 
+    color: white;
+    border: 1px solid white;
+    border-radius: 25px;
+}
+
+#abaTabelaClientes{
+    color: black;
+    background-color: white;
+    border-radius: 25px;
+}
+
+.ativoRelatorioPagamento{
+    color: black !important;
+    background-color: white;
+    border-radius: 25px;
+} 
 
 #painelCadastro {
     height: 100vh;
@@ -218,6 +256,21 @@ thead th {
     text-transform: uppercase;
 }
 
+#tbodyClienteQuePagaram td:nth-child(1) {
+    border-radius: 25px 0px 0px 25px;
+}
+#tbodyClienteQuePagaram td:nth-child(2) {
+    text-transform: uppercase;
+}
+
+#tbodyClienteQuePagaram td:nth-child(7) {
+    border-radius: 0px 25px 25px 0px;
+}
+
+#tbodyClienteQuePagaram td {
+    padding: 30px;
+}
+
 .table {
     width: 1000px;
     user-select: none;
@@ -337,4 +390,18 @@ thead th {
 
 .displayNome {
     display: none;
+}
+
+[data-anime]{
+    opacity: 0;
+    transition: .3s;
+}
+
+[data-anime="left"]{
+ transform: translate3d(-100px, 0, 0);
+}
+
+[data-anime].animate{
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
 }

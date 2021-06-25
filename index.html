@@ -23,7 +23,8 @@
                     <input maxlength="17" id="nome" data-index="" type="text" placeholder="Ex .: José da silva"
                         required />
                     <label for="placaDoCarro">Placa do carro</label>
-                    <input id="placaDoCarro" pattern="\D{3}-?\d{4}" maxlength="8" placeholder="Ex .: CHE-5729" type="text" required />
+                    <input id="placaDoCarro" pattern="\D{3}-?\d{4}" maxlength="8" placeholder="Ex .: CHE-5729"
+                        type="text" required />
                 </form>
                 <footer>
                     <button id="btnSalvar" class="btnVerde">Salvar</button>
@@ -72,22 +73,48 @@
     </div>
 
     <main>
-        <h1>Controle de Estacionamento</h1>
-        <table class="table" id="tabelaClientes">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Placa</th>
-                    <th>Data</th>
-                    <th>Hora</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="tbody">
-              
-            </tbody>
-        </table>
+        <ul id="nav" >
+            <li><a id="abaTabelaClientes">Controle de Estacionamento</a></li>
+            <li><a id="abaRelatorioPagamento">Relatório de pagamento</a></li>
+        </ul>
+        <section id="tabelaClientesQueNaoPagaram" class="animate" data-anime="left">
+            <h1>Controle de Estacionamento</h1>
+            <table class="table" id="tabelaClientes">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Placa</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </section>
+        <section id="relatorioPagamento" class="displayNome" data-anime="left">
+            <h1>Relatório de pagamento</h1>
+            <table class="table" id="tabelaClientes">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Placa</th>
+                        <th>Data chegada</th>
+                        <th>Data saída</th>
+                        <th>Hora entrada</th>
+                        <th>Hora saída</th>
+                        <th>Valor pago</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyClienteQuePagaram">
+
+                </tbody>
+            </table>
+        </section>
     </main>
+
     <!-- MODAL PREÇO DO ESTACIONAMENTO -->
     <div class="modal" id="modalPreco">
         <div class="modal-content">
@@ -125,7 +152,7 @@
                     <label class="label margin-top-input" for="nomeEditar">Nome</label>
                 </div>
                 <div class="input-container">
-                    <input id="placaEditar" class="input" pattern="\D{3}-?\d{4}"  maxlength="8" type="text" required />
+                    <input id="placaEditar" class="input" pattern="\D{3}-?\d{4}" maxlength="8" type="text" required />
                     <label class="label inputSengundoAdiante" for="placaEditar">Placa do carro</label>
                 </div>
                 <div class="input-container">
@@ -139,7 +166,8 @@
             </form>
 
             <footer class="modal-footer btnDois">
-                <button type="submit" class="btnVerde btnAumentaWidth" id="btnAtualizarCliente">Salvar alterações</button>
+                <button type="submit" class="btnVerde btnAumentaWidth" id="btnAtualizarCliente">Salvar
+                    alterações</button>
                 <button type="button" class="btnAmarelo" id="cancelarEditarDados">Cancelar</button>
             </footer>
         </div>
@@ -209,6 +237,7 @@
             </footer>
         </div>
     </div>
+
 
     <script src="./main.js"></script>
 </body>

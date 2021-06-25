@@ -9,6 +9,33 @@ const openModalEditPrice = () => document.querySelector('#modalEditar')
 const openModalProof = () => document.querySelector('#modalComprovante')
     .classList.add('active')
 
+const executeAnimate = () => document.querySelector('#relatorioPagamento')
+    .classList.add('animate')
+
+const executeAnimateTableClient = () => document.querySelector('#tabelaClientesQueNaoPagaram')
+    .classList.add('animate')
+
+const removeAnimate = () => document.querySelector('#relatorioPagamento')
+    .classList.remove('animate')
+
+const removeAnimateTableClient = () => document.querySelector('#tabelaClientesQueNaoPagaram')
+    .classList.remove('animate')
+
+const openPaymentReportTab = () => {
+    document.querySelector('#relatorioPagamento')
+        .classList.remove('displayNome')
+    document.querySelector('#abaRelatorioPagamento')
+        .classList.add('ativoRelatorioPagamento')
+    setTimeout(executeAnimate, 500)
+    removeAnimateTableClient()
+}
+
+const openCustomersTable = () => {
+    document.querySelector('#tabelaClientesQueNaoPagaram')
+        .classList.remove('displayNome')
+    setTimeout(executeAnimateTableClient, 500)
+}
+
 const modalVouchers = () => document.querySelector('#modalEscolhaDeComprovante')
     .classList.remove('active')
 
@@ -29,6 +56,15 @@ const closeComprovante = () => document.querySelector('#modalComprovante')
 
 const closeChoiceVoucher = () => document.querySelector('#modalEscolhaDeComprovante')
     .classList.remove('active')
+
+const closeTabCustomersTable = () => document.querySelector('#tabelaClientesQueNaoPagaram')
+    .classList.add('displayNome')
+
+const closePayersReport = () => {
+    document.querySelector('#relatorioPagamento')
+        .classList.add('displayNome')
+    removeAnimate()
+}
 
 const cancelVoucherEntry = () => {
     const db = readDB()
@@ -78,7 +114,7 @@ const updateClient = () => {
     updateTable()
 }
 
-const createRegistration = (dadosCadastro, index) => {
+const createRegistration = (dadosCadastro) => {
 
     const cadastro = document.createElement('tr')
     cadastro.innerHTML = `  
@@ -87,9 +123,9 @@ const createRegistration = (dadosCadastro, index) => {
     <td>${dadosCadastro.date}</td>
     <td>${dadosCadastro.time}</td>
     <td>
-        <button type="button" id="btnComprovanteIndex" class="btnVerde" data-action="comprovante-${index}" >Comprovantes</button>
-        <button type="button" class="btnAmarelo" data-action="editar-${index}">Editar</button>
-        <button type="button" class="btnExcluir" data-action="deletar-${index}">Excluir</button>
+        <button type="button" id="btnComprovanteIndex" class="btnVerde" data-action="comprovante-${dadosCadastro.id}" >Comprovantes</button>
+        <button type="button" class="btnAmarelo" data-action="editar-${dadosCadastro.id}">Editar</button>
+        <button type="button" class="btnExcluir" data-action="deletar-${dadosCadastro.id}">Excluir</button>
     </td>`
 
     document.getElementById('tbody').appendChild(cadastro)
@@ -105,22 +141,23 @@ const clearTable = () => {
 const updateTable = () => {
     const bank = readDB()
     clearTable()
-    bank.forEach(createRegistration)
+    const customersWhoDidNotPay = bank.filter(bank => bank.status == "Não pago");
+    customersWhoDidNotPay.forEach(createRegistration)
 }
 
 const date = () => {
-    let date = new Date();
-    let morning = String(date.getDate()).padStart(2, '0');
-    let month = String(date.getMonth() + 1).padStart(2, '0');
-    let year = date.getFullYear();
+    let date = new Date()
+    let morning = String(date.getDate()).padStart(2, '0')
+    let month = String(date.getMonth() + 1).padStart(2, '0')
+    let year = date.getFullYear()
     let currentDate = morning + '.' + month + '.' + year;
     return currentDate
 }
 
 const hour = () => {
-    let today = new Date();
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
+    let today = new Date()
+    let hours = today.getHours()
+    let minutes = today.getMinutes()
     let currentTime = (hours) + ":" + minutes
     return currentTime
 }
@@ -135,7 +172,7 @@ const disableButton = () => {
     document.querySelector('#modalComprovanteEntrada').classList.add('btnDois')
 }
 
-const enableButton = () =>{
+const enableButton = () => {
     document.querySelector('#cancelarComprovanteEntrada').classList.remove('displayNome')
     document.querySelector('#modalComprovanteEntrada').classList.remove('btnDois')
 }
@@ -150,7 +187,6 @@ const printProofOfEntry = () => {
 
 const proofOfEntry = (array) => {
 
-    console.log(array)
     document.querySelector('#nomeComprovanteEntrada').value = array[0]
     document.querySelector('#placaComprovanteEntrada').value = array[1]
     document.querySelector('#dataComprovanteEntrada').value = array[2]
@@ -171,14 +207,20 @@ const saveClient = () => {
             openModalPrice()
 
         } else {
+
+            const lastId = readDB().length - 1;
+            let validId = lastId == -1 ? 0 : parseInt(readDB()[lastId].id) + 1
             const newClient = {
+                id: validId,
                 name: document.querySelector('#nome').value,
                 hescores: document.querySelector('#placaDoCarro').value,
                 date: date(),
+                exitdate: '',
                 time: hour(),
-                status: "Não pago"                 
+                departureTime: '',
+                status: "Não pago",
+                amountToPay: ''
             }
-
             insertDB(newClient)
         }
 
@@ -329,18 +371,62 @@ const actionButttons = (event) => {
 }
 
 const changeStatus = () => {
+
     const resp = confirm("Confirma que o cliente, já realizou o pagamento?")
-    const index = document.querySelector('#btnPagamento').dataset.index  
-    const db = readDB()
 
     if (resp) {
-        db.splice(index, 1)
+        const saveCustomerWhoPaid = {
+            id: document.querySelector('#btnPagamento').dataset.index,
+            name: document.querySelector('#nomeComprovante').value,
+            hescores: document.querySelector('#placaComprovante').value,
+            date: document.querySelector('#dataComprovante').value,
+            exitdate: date(),
+            time: document.querySelector('#horaComprovante').value,
+            departureTime: hour(),
+            amountToPay: document.querySelector('#valorPagar').value,
+            status: 'Pago'
+        }
+
+        const index = document.querySelector('#btnPagamento').dataset.index
+        const db = readDB()
+        db[index] = saveCustomerWhoPaid
         setDB(db)
-        updateTable()
+
         closeModalProof()
+        updateTable()
+        clearTableCustomersWhoPaid()
+        updateTableCustomersParagram()
     }
 }
 
+
+const registeringCustomersWhoPaid = (dados) => {
+
+    const cadastro = document.createElement('tr')
+    cadastro.innerHTML = `  
+    <td>${dados.name}</td>
+    <td>${dados.hescores}</td>
+    <td>${dados.date}</td>
+    <td>${dados.exitdate}</td>
+    <td>${dados.time}</td>
+    <td>${dados.departureTime}</td>
+    <td>${dados.amountToPay}</td>
+    `
+    document.getElementById('tbodyClienteQuePagaram').appendChild(cadastro)
+}
+
+const clearTableCustomersWhoPaid = () => {
+    const customersWhoPaidTable = document.querySelector('#tbodyClienteQuePagaram')
+    while (customersWhoPaidTable.firstChild) {
+        customersWhoPaidTable.removeChild(customersWhoPaidTable.lastChild)
+    }
+}
+
+const updateTableCustomersParagram = () => {
+    const bank = readDB()
+    const customersWhoHaveAlreadyPaid = bank.filter(bank => bank.status == "Pago");
+    customersWhoHaveAlreadyPaid.forEach(registeringCustomersWhoPaid)
+}
 
 document.querySelector('#salvarPreco')
     .addEventListener('click', savePrice)
@@ -394,7 +480,7 @@ document.querySelector('#btnPreco')
     .addEventListener('click', () => { openModalPrice(); showModalPrice() })
 
 document.querySelector('#btnSalvar')
-    .addEventListener('click', () => {saveClient(); enableButton()})
+    .addEventListener('click', () => { saveClient(); enableButton() })
 
 document.querySelector('#btnAtualizarCliente')
     .addEventListener('click', updateClient)
@@ -414,4 +500,11 @@ document.querySelector('#btnImprimirComprovanteEntrada')
 document.querySelector('#btnPago')
     .addEventListener('click', changeStatus)
 
+document.querySelector('#abaRelatorioPagamento')
+    .addEventListener('click', () => { openPaymentReportTab(); closeTabCustomersTable(); })
+
+document.querySelector('#abaTabelaClientes')
+    .addEventListener('click', () => { openCustomersTable(); closePayersReport() })
+
 updateTable()
+updateTableCustomersParagram()
