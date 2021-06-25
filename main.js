@@ -25,7 +25,9 @@ const openPaymentReportTab = () => {
     document.querySelector('#relatorioPagamento')
         .classList.remove('displayNome')
     document.querySelector('#abaRelatorioPagamento')
-        .classList.add('ativoRelatorioPagamento')
+        .classList.add('ativoAba')
+    document.querySelector('#abaTabelaClientes')
+        .classList.remove('ativoAba')
     setTimeout(executeAnimate, 500)
     removeAnimateTableClient()
 }
@@ -33,6 +35,10 @@ const openPaymentReportTab = () => {
 const openCustomersTable = () => {
     document.querySelector('#tabelaClientesQueNaoPagaram')
         .classList.remove('displayNome')
+    document.querySelector('#abaTabelaClientes')
+        .classList.add('ativoAba')
+    document.querySelector('#abaRelatorioPagamento')
+        .classList.remove('ativoAba')
     setTimeout(executeAnimateTableClient, 500)
 }
 
@@ -67,9 +73,14 @@ const closePayersReport = () => {
 }
 
 const cancelVoucherEntry = () => {
-    const db = readDB()
-    db.pop();
-    setDB(db)
+    const reasonToDelete = prompt(`Por qual motivo deseja deletar?`)
+    const resp = confirm(`Confirma que o motivo da exclusão é ${reasonToDelete}`)
+
+    if (resp) {
+        const db = readDB()
+        db.pop();
+        setDB(db)
+    }
 
     document.querySelector('#modalComprovanteEntrada').classList.remove('active')
     updateTable()
@@ -98,10 +109,15 @@ const insertDBPrice = (registrationPrice) => {
 const updateClient = () => {
 
     const updatedData = {
+        id: document.querySelector('#nomeEditar').dataset.index,
         name: document.querySelector('#nomeEditar').value,
         hescores: document.querySelector('#placaEditar').value,
         date: document.querySelector('#dataEditar').value,
-        time: document.querySelector('#horaEditar').value
+        exitdate: '',
+        time: document.querySelector('#horaEditar').value,
+        departureTime: '',
+        status: 'Não pago',
+        amountToPay: ''
     }
 
     const index = document.querySelector('#nomeEditar').dataset.index
@@ -283,9 +299,11 @@ const applyMaskCar = (event) => {
 }
 
 const deleteClient = (index) => {
-    const db = readDB()
-    const resp = confirm(`Deseja realmente deletar ${db[index].name}?`)
 
+    const db = readDB()
+    const reasonToDelete = prompt(`Por qual motivo deseja deletar ${db[index].name}?`)
+    const resp = reasonToDelete == '' ? alert("Informe um motivo!") :
+        confirm(`Confirma que o motivo da exclusão é ${reasonToDelete}`)
     if (resp) {
         db.splice(index, 1)
         setDB(db)
@@ -294,21 +312,17 @@ const deleteClient = (index) => {
 }
 
 const editClient = (index) => {
-
     const db = readDB()
-
     document.querySelector('#nomeEditar').value = db[index].name
     document.querySelector('#placaEditar').value = db[index].hescores
     document.querySelector('#dataEditar').value = db[index].date
     document.querySelector('#horaEditar').value = db[index].time
     document.querySelector('#nomeEditar').dataset.index = index
-
     openModalEditPrice()
 }
 
 const printOutProof = () => {
     modalVouchers()
-
     const index = document.querySelector('#btnPagamento').dataset.index
     const db = readDB()
     const dbPrice = readDBPrice()
@@ -371,9 +385,7 @@ const actionButttons = (event) => {
 }
 
 const changeStatus = () => {
-
     const resp = confirm("Confirma que o cliente, já realizou o pagamento?")
-
     if (resp) {
         const saveCustomerWhoPaid = {
             id: document.querySelector('#btnPagamento').dataset.index,
@@ -398,7 +410,6 @@ const changeStatus = () => {
         updateTableCustomersParagram()
     }
 }
-
 
 const registeringCustomersWhoPaid = (dados) => {
 
