@@ -172,11 +172,12 @@ const date = () => {
 
 const hour = () => {
     let today = new Date()
-    let hours = today.getHours()
-    let minutes = today.getMinutes()
+    let hours = ('00' + today.getHours()).slice(-2)
+    let minutes = ('00' + today.getMinutes()).slice(-2)
     let currentTime = (hours) + ":" + minutes
     return currentTime
 }
+
 
 const clearInput = () => {
     document.querySelector('#nome').value = ''
