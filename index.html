@@ -22,10 +22,10 @@
                 <form class="formCadastro">
                     <label for="nome">Nome</label>
                     <input maxlength="17" id="nome" data-index="" type="text" placeholder="Ex .: José da silva"
-                        required />
+                        required autocomplete="off" />
                     <label for="placaDoCarro">Placa do carro</label>
                     <input id="placaDoCarro" pattern="\D{3}-?\d{4}" maxlength="8" placeholder="Ex .: CHE-5729"
-                        type="text" required />
+                        type="text" required autocomplete="off" />
                 </form>
                 <footer>
                     <button id="btnSalvar" class="btnVerde">Salvar</button>
@@ -163,11 +163,11 @@
 
             <form class="formInputMaterializado">
                 <div class="input-container">
-                    <input id="nomeEditar" data-index="" class="input" type="text" required />
+                    <input id="nomeEditar" data-index="" class="input" type="text" required  autocomplete="off" />
                     <label class="label margin-top-input" for="nomeEditar">Nome</label>
                 </div>
                 <div class="input-container">
-                    <input id="placaEditar" class="input" pattern="\D{3}-?\d{4}" maxlength="8" type="text" required />
+                    <input id="placaEditar" class="input" pattern="\D{3}-?\d{4}" maxlength="8" type="text" required  autocomplete="off" />
                     <label class="label inputSengundoAdiante" for="placaEditar">Placa do carro</label>
                 </div>
                 <div class="input-container">
